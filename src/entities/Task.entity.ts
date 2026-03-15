@@ -1,24 +1,30 @@
-import { Column, CreateDateColumn, Entity, ForeignKey, ObjectId, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-@Entity({ name: 'user' })
-export class User {
+import { Column, CreateDateColumn, Entity, ForeignKey, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { User } from "./User.entity.js";
+
+@Entity({ name: 'task' })
+export class Task {
     @PrimaryGeneratedColumn("uuid")
-    id: string;
+    id!: string;
 
     @Column({ nullable: false })
-    title: string;
+    title!: string;
 
     @Column({ nullable: false })
-    description: string;
+    description!: string;
 
     @Column({ nullable: false })
-    status: string;
+    status!: string;
 
-    @ForeignKey(ObjectId(User))
-    userId: string;
+    @Column()
+    userId!: string;
+
+        @ManyToOne(()=> User,(user) => user.)
+
+
     @CreateDateColumn()
-    createdAt: Date;
+    createdAt!: Date;
 
     @UpdateDateColumn()
-    updatedAt: Date;
+    updatedAt!: Date;
 }
