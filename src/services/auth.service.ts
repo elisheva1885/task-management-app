@@ -4,7 +4,4 @@ export class AuthService {
         return await userRepository.save(user);
     }
 
-    const login = (username: string, password: string) => {
-        
-    }
 }

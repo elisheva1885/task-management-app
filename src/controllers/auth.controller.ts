@@ -6,9 +6,5 @@ export class AuthController{
        const user = await AuthService.register(username,password);
        res.json(user);
     }
-    const login = (req: Request, res: Response)=>{
-        const { username, password} = req.body;
-        await AuthService.login(username, password)
-    }
 
 }
