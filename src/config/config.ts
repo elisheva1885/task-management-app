@@ -13,7 +13,7 @@ interface DB {
 interface Config {
     port: number;
     db: DB
-
+    jwt : string;
 }
 
 const config: Config = {
@@ -23,7 +23,6 @@ const config: Config = {
     dbUsername: process.env.DB_USERNAME || 'postgres',
     dbPassword: process.env.DB_PASSWORD || '',
     dbDatabase: process.env.DB_DATABASE || 'default_db_name',
-    
-
-    }
+    },
+    jwt: process.env.JWT_SECRET  || 'secret'
 }
