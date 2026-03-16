@@ -1,3 +1,6 @@
-
 import express from 'express'
-const router = express()
+import { TaskController } from '../controllers/task.controller.js';
+const taskRouter = express.Router()
+const taskController = new TaskController();
+
+taskRouter.post('/register', taskController.getAllTasks)

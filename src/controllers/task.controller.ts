@@ -5,6 +5,11 @@ const taskService = new TaskService();
 
 export class TaskController {
     async getAllTasks(req:Request, res:Response){
-        const tasks = taskService.getAllTasks();
+        try{
+            const tasks = taskService.getAllTasks();
+        }
+        catch(error: Error){
+            console.error(error);
+        }
     }
 }
