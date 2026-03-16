@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Task } from "./Task.entity.js";
 
 @Entity({ name: 'user' })
 export class User {
@@ -12,4 +13,7 @@ export class User {
     createdAt!: Date;
     @UpdateDateColumn()
     updatedAt!: Date;
+
+    @OneToMany(()=> Task, (task)=> task.user,{cascade:true})
+    tasks!:Task[];
 }
