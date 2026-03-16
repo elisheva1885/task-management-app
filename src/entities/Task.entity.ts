@@ -14,7 +14,10 @@ export class Task {
     description!: string;
 
     @Column({ nullable: false })
-    status!: string;
+    priority!: string;
+
+    @Column({ nullable: false })
+    deadline! : Date;
 
     @Column()
     userId!: string;
