@@ -3,4 +3,8 @@ export class AuthService {
         //add check if the user isnt exist
         return await userRepository.save(user);
     }
+
+    const login = (username: string, password: string) => {
+        
+    }
 }
