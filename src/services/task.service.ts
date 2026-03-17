@@ -8,7 +8,7 @@ export class TaskService {
         if(!data.title || !data.description || !data.priority || !data.deadline){
             throw new Error("all details required");
         }
-        const task = taskRepository.create({data})
+        const task = taskRepository.create(data)
         await taskRepository.save(task);
        return task;
     }
