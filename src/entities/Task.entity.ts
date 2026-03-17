@@ -26,9 +26,4 @@ export class Task {
     @JoinColumn()
     user!: User;
 
-    @CreateDateColumn()
-    createdAt!: Date;
-
-    @UpdateDateColumn()
-    updatedAt!: Date;
 }

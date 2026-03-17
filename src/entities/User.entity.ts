@@ -5,14 +5,10 @@ import { Task } from "./Task.entity.js";
 export class User {
     @PrimaryGeneratedColumn("uuid")
     id!: string;
-    @Column({ nullable: false })
+    @Column({ nullable: false ,unique:true})
     username!: string;
     @Column({ nullable: false })
     password!: string;
-    @CreateDateColumn()
-    createdAt!: Date;
-    @UpdateDateColumn()
-    updatedAt!: Date;
 
     @OneToMany(()=> Task, (task)=> task.user,{cascade:true})
     tasks!:Task[];
