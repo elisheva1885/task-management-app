@@ -7,9 +7,9 @@ services:
     env_file:
       - .env.stage.dev
     environment:
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: DB_USERNAME
+      POSTGRES_PASSWORD: DB_PASSWORD
+      POSTGRES_DB: DB_DATABASE
     ports:
       - "5433:5432"
     volumes:
