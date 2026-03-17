@@ -12,9 +12,7 @@
   "type": "module",
   "dependencies": {
     "dotenv": "^17.3.1",
-    "express": "^5.2.1",
-    "pg-promise": "^12.6.2",
-    "typeorm": "^0.3.28"
+    "express": "^5.2.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",

@@ -1,17 +1,14 @@
 import { DataSource } from 'typeorm'
-import dotenv from "dotenv";
-dotenv.config({ path: ".env.stage.dev" });
-
-const { DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_DATABASE, NODE_ENV } = process.env;
+import { configData } from '../config/config.js';
 
 
 export const AppDataSource  = new DataSource({
     type: 'postgres',
-    host: DB_HOST!,
-    port: Number(DB_PORT!),
-    username: DB_USERNAME!,
-    password: DB_PASSWORD!,
-    database: DB_DATABASE!,
+    host: configData.db.dbHost,
+    port: Number(configData.db.dbPort),
+    username:configData.db.dbUsername,
+    password: configData.db.dbPassword,
+    database: configData.db.dbDatabase,
     synchronize: false,
     logging: true,
     // entities: [User, Task],
