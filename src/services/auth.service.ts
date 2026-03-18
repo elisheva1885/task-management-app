@@ -1,21 +1,22 @@
+import { User } from "../entities/User.entity.js";
+import { AppError } from "../errors/app-errors.js";
 import { encryptionPassword } from "../helpers/helpers.js"
-import { AppDataSource } from "../repositories/auth.repository.js";
 
 const userRepository = AppDataSource.getRepository(User);
 
 
 export class AuthService {
     async register(username: string, password: string) {
-        const existUser = await userRepository.find({
+        const existUser = await userRepository.findOne({
             where: { username: username }
         })
         if (existUser) {
-            throw new Error("User allready exist")
+            throw new AppError("User already exist",400)
         }
         const hashPass = encryptionPassword(password);
-
         const user = userRepository.create({ username, hashPass })
-        return await userRepository.save(user);
+        await userRepository.save(user);
+        return {id: user.id ,  username: user.username}
     }
 
 }
