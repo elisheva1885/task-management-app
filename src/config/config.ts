@@ -21,7 +21,7 @@ export const configData: Config = {
     db : { dbHost: process.env.DB_HOST || 'localhost',
     dbPort: Number(process.env.DB_PORT) || 5432,
     dbUsername: process.env.DB_USERNAME || 'postgres',
-    dbPassword: process.env.DB_PASSWORD || '',
+    dbPassword: process.env.DB_PASSWORD || 'password',
     dbDatabase: process.env.DB_DATABASE || 'default_db_name',
     },
     jwt: process.env.JWT_SECRET  || 'secret'
