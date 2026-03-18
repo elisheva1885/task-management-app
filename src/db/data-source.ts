@@ -16,6 +16,7 @@ export const AppDataSource = new DataSource({
     synchronize: true,
     logging: true,
     entities: [User, Task],
+    migrations: ["src/migrations/**/*.ts"],
     // migrations: [join(__dirname, "migration", "*.ts")],
     subscribers: [],
 });

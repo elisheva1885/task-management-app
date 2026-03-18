@@ -10,18 +10,14 @@ console.log("the data: ", configData);
 
 
 
-async function main() {
-    console.log();
-    
-    try {
-        await AppDataSource.initialize();
-        console.log("Data Source has been initialized!");
-        app.listen(PORT, () => {
-            console.log("Server is running on http://localhost:" + PORT);
-        });
-    } catch (err) {
-        console.error(err);
-    }
-}
+AppDataSource.initialize()
+  .then(() => {
+    console.log("✅ DB connected");
+    // כאן מפעילים את השרת
+  })
+  .catch((error) => {
+    console.error("❌ DB connection failed:", error);
+    process.exit(1);
+  });
 
-main();
+
