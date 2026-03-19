@@ -16,7 +16,7 @@ interface Config {
     jwt : string;
 }
 
-const config: Config = {
+export const configData: Config = {
     port: Number(process.env.PORT) || 3000,
     db : { dbHost: process.env.DB_HOST || 'localhost',
     dbPort: Number(process.env.DB_PORT) || 5432,
