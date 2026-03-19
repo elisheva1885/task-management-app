@@ -19,7 +19,7 @@ interface Config {
 export const configData: Config = {
     port: Number(process.env.PORT) || 3000,
     db : { dbHost: process.env.DB_HOST || 'localhost',
-    dbPort: Number(process.env.DB_PORT) || 5432,
+    dbPort: Number(process.env.DB_PORT) || 5433,
     dbUsername: process.env.DB_USERNAME || 'postgres',
     dbPassword: process.env.DB_PASSWORD || 'password',
     dbDatabase: process.env.DB_DATABASE || 'default_db_name',

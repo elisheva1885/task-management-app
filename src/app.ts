@@ -9,6 +9,7 @@ app.use(express.json());
 
 
 const PORT = configData.port ;
+console.log(configData);
 
 AppDataSource.initialize()
 .then(async()=> {
