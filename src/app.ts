@@ -1,15 +1,14 @@
 import "reflect-metadata";
 import express from 'express'
 import { AppDataSource } from "./db/data-source.js";
-import { configData } from "./config/config.js";
+import {  configEnvironmentData } from "./config/config.js";
 import { errorHandler } from "./middlewares/error.middleware.js";
 const app = express();
 
 app.use(express.json());
 
 
-const PORT = configData.port ;
-console.log(configData);
+const PORT = configEnvironmentData.port ;
 
 AppDataSource.initialize()
 .then(async()=> {

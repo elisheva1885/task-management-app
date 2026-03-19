@@ -7,22 +7,25 @@ export class Task {
     @PrimaryGeneratedColumn("uuid")
     id!: string;
 
-    @Column({ type: "varchar", nullable: false })
+    @Column({ nullable: false })
     title!: string;
 
-    @Column({ type: "varchar", nullable: false })
+    @Column({ nullable: false })
     description!: string;
 
-    @Column({ type: "varchar", nullable: false })
+    @Column({ nullable: false })
     priority!: string;
 
     @Column({ type: "timestamp", nullable: false })
     deadline!: Date;
 
-    @Column({type: "varchar" })
+    @Column()
     userId!: string;
 
     @ManyToOne(() => User, user => user.tasks)
     @JoinColumn({ name: "userId" })
     user!: User;
+
+
+
 }
