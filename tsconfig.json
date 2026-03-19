@@ -42,9 +42,4 @@
     "moduleDetection": "force",
     "skipLibCheck": true,
   },
-  "ts-node": {
-  "esm": true,
-  "experimentalSpecifierResolution": "node",
-  "transpileOnly": false
-}
 }
