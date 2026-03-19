@@ -16,9 +16,9 @@
       "node"
     ],
     // and npm install -D @types/node
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": false,
+    "emitDecoratorMetadata": true,
     // Other Outputs
     "sourceMap": true,
     "declaration": true,
@@ -41,5 +41,6 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
+    "allowSyntheticDefaultImports" : true,
   },
 }
