@@ -1,18 +1,16 @@
 # version: '3.8'
 services:
   db:
-    image: postgres:latest
+    image: postgres:16
     container_name: postgres_container
-    env_file:
-      - .env.stage.dev
     environment:
-      - POSTGRES_USER=${DB_USERNAME}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_DB=${DB_DATABASE}
+      POSTGRES_USER: task_managment_db_user
+      POSTGRES_PASSWORD: task_managment_db_password
+      POSTGRES_DB: task_managment_db
     ports: 
-      - "5432:5432"
+      - "5433:5432"
     volumes:
-      - db_data:/var/lib/postgresql
+      - db_data:/var/lib/postgresql/data
 volumes:
   db_data:
 

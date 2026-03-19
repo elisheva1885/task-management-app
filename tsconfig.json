@@ -6,20 +6,19 @@
     "outDir": "./dist",
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "ESNext",
-    "target": "ES2020",
+    "module": "esnext",
+    "target": "esnext",
+    // For nodejs:
+    "lib": [
+      "esnext"
+    ],
     "types": [
       "node"
     ],
-    "moduleResolution": "Node",
-    "esModuleInterop": true,
-    // For nodejs:
-    // "lib": ["esnext"],
-    // "types": ["node"],
     // and npm install -D @types/node
-    // "moduleResolution": "nodenext",
-    "emitDecoratorMetadata": true,
+    "moduleResolution": "bundler",
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": false,
     // Other Outputs
     "sourceMap": true,
     "declaration": true,
@@ -36,11 +35,16 @@
     // "noPropertyAccessFromIndexSignature": true,
     // Recommended Options
     "strict": true,
-    // "jsx": "react-jsx",
+    "jsx": "react-jsx",
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
-  }
+  },
+  "ts-node": {
+  "esm": true,
+  "experimentalSpecifierResolution": "node",
+  "transpileOnly": false
+}
 }
