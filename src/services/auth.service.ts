@@ -1,3 +1,4 @@
+import { AppDataSource } from "../db/data-source.js";
 import { User } from "../entities/User.entity.js";
 import { AppError } from "../errors/app-errors.js";
 import { encryptionPassword } from "../helpers/helpers.js"
@@ -14,7 +15,7 @@ export class AuthService {
             throw new AppError("User already exist",400)
         }
         const hashPass = encryptionPassword(password);
-        const user = userRepository.create({ username, hashPass })
+        const user : User = userRepository.create({ username,password:  hashPass })
         await userRepository.save(user);
         return {id: user.id ,  username: user.username}
     }
