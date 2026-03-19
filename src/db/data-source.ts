@@ -3,7 +3,6 @@ import { configData } from '../config/config.js';
 import { User } from '../entities/User.entity.js';
 import { Task } from '../entities/Task.entity.js';
 
-console.log("in app data ", configData);
 
 
 export const AppDataSource = new DataSource({
