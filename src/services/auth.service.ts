@@ -1,8 +1,8 @@
 
+import { AppDataSource } from "../db/data-source.js";
 import { User } from "../entities/User.entity.js";
 import { AppError } from "../errors/app-errors.js";
 import { comparePassword, generateToken } from "../helpers/helpers.js";
-import { AppDataSource } from "../repositories/auth.repository.js";
 
 const userRepository = AppDataSource.getRepository(User);
 
