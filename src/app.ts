@@ -9,7 +9,6 @@ app.use(express.json());
 
 
 const PORT = configData.port ;
-console.log("the data: ", configData);
 
 AppDataSource.initialize()
 .then(async()=> {
