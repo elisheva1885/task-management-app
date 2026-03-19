@@ -2,7 +2,7 @@ import dotenv from 'dotenv'
 
 dotenv.config();
 
-interface DB {
+interface ConfigDb {
     dbHost: string;
     dbPort: number;
     dbUsername: string;
@@ -10,19 +10,20 @@ interface DB {
     dbDatabase: string
 }
 
-interface Config {
+interface ConfigEnvironment {
     port: number;
-    db: DB
-    jwt : string;
+    jwt: string;
 }
 
-const config: Config = {
-    port: Number(process.env.PORT) || 3000,
-    db : { dbHost: process.env.DB_HOST || 'localhost',
-    dbPort: Number(process.env.DB_PORT) || 5432,
+export const configDbData: ConfigDb = {
+    dbHost: process.env.DB_HOST || 'localhost',
+    dbPort: Number(process.env.DB_PORT) || 5433,
     dbUsername: process.env.DB_USERNAME || 'postgres',
-    dbPassword: process.env.DB_PASSWORD || '',
+    dbPassword: process.env.DB_PASSWORD || 'password',
     dbDatabase: process.env.DB_DATABASE || 'default_db_name',
-    },
-    jwt: process.env.JWT_SECRET  || 'secret'
+}
+
+export const configEnvironmentData: ConfigEnvironment = {
+    port: Number(process.env.PORT) || 3000,
+    jwt: process.env.JWT_SECRET || 'secret'
 }

@@ -1,3 +1,4 @@
+
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Task } from "./Task.entity.js";
 
@@ -5,9 +6,9 @@ import { Task } from "./Task.entity.js";
 export class User {
     @PrimaryGeneratedColumn("uuid")
     id!: string;
-    @Column({ nullable: false ,unique:true})
+    @Column({type: "varchar",  nullable: false ,unique:true})
     username!: string;
-    @Column({ nullable: false })
+    @Column({type: "varchar",  nullable: false })
     password!: string;
 
     @OneToMany(()=> Task, (task)=> task.user,{cascade:true})
