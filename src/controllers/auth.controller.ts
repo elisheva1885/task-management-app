@@ -3,12 +3,11 @@ import { type Request , type Response } from "express";
 const authService = new AuthService();
 export class AuthController {
     async login(req: Request, res: Response) {        
-       console.log("in controller");
         const { username, password } = req.body;
         if(!username || !password){
-            return res.status(400).json({message: "all details required"})
+            return res.status(400).json({message: "All details required"})
         }
         const token = await authService.login(username, password)
-        res.status(200).json({token: token})
+        return res.status(200).json({token: token})
     }
 }
