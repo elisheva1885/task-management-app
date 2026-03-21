@@ -1,4 +1,5 @@
 
+import type { Repository } from "typeorm";
 import { AppDataSource } from "../db/data-source.js";
 import { User } from "../entities/User.entity.js";
 import { AppError } from "../errors/app-errors.js";
@@ -8,21 +9,20 @@ const userRepository = AppDataSource.getRepository(User);
 
 
 export class AuthService {
+
     async login(username: string, password: string) {
-        const existUser = await userRepository.findOne({
-            where : {username: username}
+        const user = await userRepository.findOne({
+            where: { username }
         })
-        if(!existUser){
-            throw new AppError("'Unauthorized", 401);
+        if (!user) {
+            throw new AppError("Unauthorized", 401);
         }
-        const match = await comparePassword(password, existUser.password)
-        if(!match)
-        {
-            throw new AppError("'Unauthorized", 401);
+        const isMatch = await comparePassword(password, user.password)
+        if (!isMatch) {
+            throw new AppError("Unauthorized", 401);
         }
-        const userInfo =  {id: existUser.id, username: existUser.username}
-        const userToken = generateToken(userInfo);
-        return userToken;
+        const userInfo = { id: user.id, username: user.username }
+        return generateToken(userInfo);
     }
 
 }
