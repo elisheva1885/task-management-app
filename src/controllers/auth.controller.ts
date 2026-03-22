@@ -1,23 +1,23 @@
 import type { RegisterRequestDto, RegisterResponseDto } from "../dto/auth.dto.js";
 import { passwordScore } from "../helpers/password-helper.js";
 import { AuthService } from "../services/auth.service.js";
-import { type Request, type Response } from "express";
+import type { Request, Response } from "express";
 const authService = new AuthService();
 export class AuthController {
     async register(req: Request, res: Response) {
-        
         const data: RegisterRequestDto = req.body;
-        if (!data.username || !data.password) {
+        const { username, password } = data;
+        if (!username || !password) {
             return res.status(400).json({ message: "All details required" })
         }
-        if (typeof data.username !== "string" || typeof data.password !== "string") {
+        if (typeof username !== "string" || typeof password !== "string") {
             return res.status(400).json({ message: "Invalid input" });
         }
-        const score = passwordScore(data.password)
-        if(score <=3 ){
+        const score = passwordScore(password)
+        if (score <= 3) {
             return res.status(400).json({ message: "password isn't strong enough" });
         }
-        const user : RegisterResponseDto = await authService.register(data.username, data.password)
+        const user: RegisterResponseDto = await authService.register(username, password)
         return res.status(201).json(user);
     }
 }
