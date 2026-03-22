@@ -6,9 +6,12 @@ const taskRepository = AppDataSource.getRepository(Task);
 
 
 export class TaskService {
-    async getAllTasks()  :  Promise<Task[]>{
-        const tasks = taskRepository.find();
-        if(!tasks){
+    async getAllTasks(userId: string): Promise<Task[]> {
+        const tasks = await taskRepository.find(
+            { where: { userId } }
+        );
+        
+        if (tasks.length === 0) {
             throw new AppError("no tasks found", 404)
         }
         return tasks;
