@@ -2,7 +2,6 @@ import "reflect-metadata";
 import express from 'express'
 import { AppDataSource } from "./db/data-source.js";
 import {  configEnvironmentData } from "./config/config.js";
-import { errorHandler } from "./middlewares/error.middleware.js";
 import { indexRouter } from "./routes/index-route.route.js";
 const app = express();
 

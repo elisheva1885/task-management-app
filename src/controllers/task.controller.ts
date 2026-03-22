@@ -7,13 +7,14 @@ const taskService = new TaskService()
 export class TaskController {
     async addTask(req: Request, res: Response) {
         const data: CreateTaskRequestDto = req.body;
+        const userId = req.user.id;
         if (!data.title || !data.description || !data.priority || !data.deadline) {
             return res.status(400).json({ message: "All details required" });
         }
         if (typeof data.title !== "string" || typeof data.description !== "string" || typeof data.priority !== "string" ||  data.deadline !== "string") {
             return res.status(400).json({ message: "Invalid input" });
         }
-        const task = await taskService.addTask(data);
+        const task = await taskService.addTask(data, userId);
         res.status(201).json(task);
     }
 }
