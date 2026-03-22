@@ -1,20 +1,25 @@
 import "reflect-metadata";
-import { DataSource } from "typeorm";
-import dotenv from "dotenv";
+import express from 'express'
+import { AppDataSource } from "./db/data-source.js";
+import {  configEnvironmentData } from "./config/config.js";
+import { errorHandler } from "./middlewares/error.middleware.js";
+import { indexRouter } from "./routes/index-router.route.js";
+const app = express();
 
-dotenv.config();
+app.use(express.json());
+app.use("/api", indexRouter)
 
-export const AppDataSource = new DataSource({
-  type: "postgres",
-  host: process.env.DB_HOST,
-  port: Number(process.env.DB_PORT),
-  username: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+const PORT = configEnvironmentData.port ;
 
-  entities: ["src/entities/*.ts"],
-  migrations: ["src/migrations/*.ts"],
-
-  synchronize: true,
-  logging: false,
+AppDataSource.initialize()
+.then(async()=> {
+  console.log("Database connected successfully!");
+}).catch((err : Error)=>{
+  console.log("Error on Database initializtion: ", err);
+  
 });
+app.listen(PORT, ()=> {
+  console.log(`server running on port ${PORT}`);
+})
+
+
