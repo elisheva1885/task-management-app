@@ -2,12 +2,14 @@ import type { CreateTaskRequestDto } from "../dto/create-task.dto.js";
 import type { Task } from "../entities/Task.entity.js";
 import { TaskService } from "../services/task.service.js";
 import { type Response, type Request } from "express";
+import type { AuthRequest } from "../types/auth.types.js";
 
 const taskService = new TaskService()
 export class TaskController {
-    async addTask(req: Request, res: Response) {
+    async addTask(req: AuthRequest, res: Response) {
         const data: CreateTaskRequestDto = req.body;
-        const userId = req.user.id;
+        const userId = (req.currentUser as Jwt.JwtPayload).userId;
+
         if (!data.title || !data.description || !data.priority || !data.deadline) {
             return res.status(400).json({ message: "All details required" });
         }
