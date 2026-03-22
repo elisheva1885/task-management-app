@@ -1,13 +1,14 @@
 import { AppDataSource } from "../db/data-source.js";
+import type { RegisterResponseDto } from "../dto/auth.dto.js";
 import { User } from "../entities/User.entity.js";
 import { AppError } from "../errors/app-errors.js";
-import { encryptionPassword } from "../helpers/helpers.js"
+import { encryptionPassword } from "../helpers/password-helper.js"
 
 const userRepository = AppDataSource.getRepository(User);
 
 
 export class AuthService {
-    async register(username: string, password: string) {
+    async register(username: string, password: string):Promise<RegisterResponseDto> {
         const existUser = await userRepository.findOne({
             where: { username: username }
         })
