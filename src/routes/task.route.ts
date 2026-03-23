@@ -1,8 +1,10 @@
 import express, { type RequestHandler } from 'express'
 import { TaskController } from '../controllers/task.controller.js';
 import { authentication } from '../middlewares/jwt.middleware.js';
+import { validate } from '../middlewares/validate.middleware.js';
+import { createTaskSchema } from '../schemas/task.schema.js';
 export const taskRouter = express.Router()
 const taskController = new TaskController();
 
 taskRouter.use(authentication as RequestHandler)
-taskRouter.post('/' , taskController.addTask as RequestHandler)
+taskRouter.post('/' ,validate(createTaskSchema), taskController.addTask as RequestHandler)
