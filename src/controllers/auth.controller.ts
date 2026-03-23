@@ -7,12 +7,6 @@ export class AuthController {
     async register(req: Request, res: Response) {
         const data: RegisterRequestDto = req.body;
         const { username, password } = data;
-        // if (!username || !password) {
-        //     return res.status(400).json({ message: "All details required" })
-        // }
-        // if (typeof username !== "string" || typeof password !== "string") {
-        //     return res.status(400).json({ message: "Invalid input" });
-        // }
         const score = passwordScore(password)
         if (score <= 3) {
             return res.status(400).json({ message: "password isn't strong enough" });
