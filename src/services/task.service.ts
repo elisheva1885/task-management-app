@@ -10,10 +10,6 @@ export class TaskService {
         const tasks = await taskRepository.find(
             { where: { userId } }
         );
-        
-        if (tasks.length === 0) {
-            throw new AppError("no tasks found", 404)
-        }
         return tasks;
     }
 }
