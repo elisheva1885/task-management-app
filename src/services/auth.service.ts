@@ -18,8 +18,8 @@ export class AuthService {
         if (existUser) {
             throw new AppError("User already exist", 400)
         }
-        const hashPass = encryptionPassword(password);
-        const user: User = userRepository.create({ username, password: hashPass })
+        const hashedPassword  = encryptionPassword(password);
+        const user: User = userRepository.create({ username, password: hashedPassword  })
         await userRepository.save(user);
         return { id: user.id, username: user.username }
     }
