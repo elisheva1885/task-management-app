@@ -9,7 +9,7 @@ export class TaskService {
 
     async addTask(data:CreateTaskRequestDto, userId: string):Promise<Task> {
          const deadline = new Date(data.deadline);
-        if(!deadline.getDate()){
+        if(isNaN(deadline.getDate())){
             throw new AppError("Invalid date format" , 400)
         }
         const task = taskRepository.create({...data, deadline, userId})
