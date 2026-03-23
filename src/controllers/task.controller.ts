@@ -15,9 +15,6 @@ export class TaskController {
         if (!data.title || !data.description || !data.priority || !data.deadline) {
             return res.status(400).json({ message: "All details required" });
         }
-        if (typeof data.title !== "string" || typeof data.description !== "string" || typeof data.priority !== "string" || typeof data.deadline !== "string") {
-            return res.status(400).json({ message: "Invalid input" });
-        }
         const task = await taskService.addTask(data, userId);
         res.status(201).json(task);
     }
