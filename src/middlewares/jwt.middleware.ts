@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import { configEnvironmentData } from "../config/config.js";
 import type { AuthRequest } from "../types/auth.types.js";
 
-export const authentication  = (
+export const authentication = (
     req: AuthRequest,
     res: Response,
     next: NextFunction
@@ -18,10 +18,20 @@ export const authentication  = (
     }
     try {
         const decode = jwt.verify(token, configEnvironmentData.jwt)
-        req.currentUser = decode;
+        if (typeof decode === "string") {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+
+        if (!decode.id || !decode.username) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+        req.currentUser = {
+            id: decode.id,
+            username: decode.username
+        };
         next();
 
-    }catch{
+    } catch {
         return res.status(401).json({ message: "Unauthorized" })
     }
 }
