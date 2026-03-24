@@ -1,6 +1,11 @@
 import express from 'express'
 import { TaskController } from '../controllers/task.controller.js';
-const taskRouter = express.Router()
+import { validate } from '../middlewares/validate.middleware.js';
+import { updateTaskSchema } from '../schemas/task.schema.js';
+import asyncHandler from '../middlewares/async-handler.middleware.js';
+import { authentication } from '../middlewares/jwt.middleware.js';
+export const taskRouter = express.Router()
 const taskController = new TaskController();
 
-taskRouter.put('/:id', taskController.updateTask)
+taskRouter.use(authentication)
+taskRouter.put('/:id',validate(updateTaskSchema), asyncHandler(taskController.updateTask));
