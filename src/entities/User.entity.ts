@@ -13,4 +13,5 @@ export class User {
 
     @OneToMany(()=> Task, (task)=> task.user,{cascade:true})
     tasks!:Task[];
+
 }

@@ -1,13 +1,6 @@
 import type { NextFunction , Request  , Response} from "express"
-type AsyncFunction = (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => Promise<any>;
-
-
+import type { AsyncFunction } from "../types/async-function.type";
 export default (execution: AsyncFunction) =>
   (req: Request, res: Response, next: NextFunction) => {
-    console.log("in the middleware")
     execution(req, res, next).catch(next);
   };
