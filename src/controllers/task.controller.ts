@@ -7,7 +7,7 @@ const taskService = new TaskService();
 
 export class TaskController {
     async getAllTasks(req: AuthRequest, res: Response) {
-        const userId = (req.currentUser as jwt.JwtPayload)?.id;
+        const userId = req.currentUser?.id
         if (!userId) {
             return res.status(401).json({ message: "Unauthorized" });
         }

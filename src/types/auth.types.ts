@@ -3,5 +3,10 @@ import jwt from 'jsonwebtoken'
 
 
 export interface AuthRequest extends Request{
-    currentUser:  jwt.JwtPayload | string
+    currentUser:  CurrentUser;
+}
+
+export interface CurrentUser {
+    id: string,
+    username: string
 }
