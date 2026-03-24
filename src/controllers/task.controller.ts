@@ -8,13 +8,7 @@ const taskService = new TaskService()
 export class TaskController {
     async addTask(req: AuthRequest, res: Response) {
         const data: CreateTaskRequestDto = req.body;
-        const userId = (req.currentUser as jwt.JwtPayload)?.id;
-        if (!userId) {
-            return res.status(401).json({ message: "Unauthorized" });
-        }
-        if (!data.title || !data.description || !data.priority || !data.deadline) {
-            return res.status(400).json({ message: "All details required" });
-        }
+        const userId = req.currentUser!.id;
         const task = await taskService.addTask(data, userId);
         res.status(201).json(task);
     }
