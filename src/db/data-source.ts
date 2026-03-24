@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm'
 import {  configDbData } from '../config/config.js';
-import { User } from '../entities/User.entity.js';
 import { Task } from '../entities/Task.entity.js';
+import { User } from '../entities/User.entity.js';
 
 
 

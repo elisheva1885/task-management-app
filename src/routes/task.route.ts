@@ -4,6 +4,6 @@ import { authentication } from '../middlewares/jwt.middleware.js';
 export const taskRouter = express.Router()
 const taskController = new TaskController();
 
-taskRouter.use(authentication as RequestHandler)
+taskRouter.use(authentication)
 taskRouter.get('/', taskController.getAllTasks)
 

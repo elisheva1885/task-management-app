@@ -4,7 +4,6 @@ import { AppError } from "../errors/app-errors.js";
 
 const taskRepository = AppDataSource.getRepository(Task);
 
-
 export class TaskService {
     async getAllTasks(userId: string): Promise<Task[]> {
         const tasks = await taskRepository.find(
