@@ -8,7 +8,6 @@ const taskService = new TaskService();
 export class TaskController {
     async updateTask(req: AuthRequest, res: Response) {
         const data: UpdataTaskRequestDto = req.body;
-        console.log("in the controoler", data);
         const id = req.params.id;
         if (!id || typeof id !== 'string') {
             return res.status(400).json({ message: "no task choosen" });

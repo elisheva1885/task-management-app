@@ -8,24 +8,15 @@ const taskRepository = AppDataSource.getRepository(Task);
 const getTaskById = async (id: string) => {
     const task = await taskRepository.findOne({
         where: {id}
-    })
-    console.log("after find in the db: ", task);
-    
+    })    
     if (!task) {
         throw new AppError("task not found", 404)
     }
     return task;
 }
 
-
-
-
 export class TaskService {
-
-
-    async updateTask(taskData: UpdataTaskRequestDto, id: string, userId: string) {
-        console.log("from the controller: ", taskData, id, userId);
-        
+    async updateTask(taskData: UpdataTaskRequestDto, id: string, userId: string) {        
         const task = await getTaskById(id);
         if (task.userId !== userId) {
             throw new AppError("you have no access to update this task", 403)
@@ -44,7 +35,6 @@ export class TaskService {
             task.deadline = date;
         }
         await taskRepository.save(task);
-        console.log("in the service ",task)
         return task;
     }
 }
