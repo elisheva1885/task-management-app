@@ -12,6 +12,9 @@ export class TaskController {
             return res.status(401).json({ message: "Unauthorized" });
         }
         const tasks = await taskService.getAllTasks(userId);
-        res.status(200).json(tasks);
+        if(tasks.length === 0){
+            return res.status(200).json({message: "you dont have any tasks yet"})
+        }
+        return res.status(200).json(tasks);
     }
 }
