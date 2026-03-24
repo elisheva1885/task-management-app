@@ -16,7 +16,7 @@ export const authentication  = (
     if (!token) {
         return res.status(401).json({ message: "Unauthorized" })
     }
-    try { 
+    try {
         const decode = jwt.verify(token, configEnvironmentData.jwt)
         req.currentUser = decode;
         next();
