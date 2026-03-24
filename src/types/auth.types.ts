@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 
 
 export interface AuthRequest extends Request{
-    currentUser:  CurrentUser;
+    currentUser?:  CurrentUser;
 }
 
 export interface CurrentUser {
