@@ -6,5 +6,6 @@ import { loginSchema, registerSchema } from '../schemas/auth.schema.js';
 export const authRouter = express.Router()
 const authController = new AuthController();
 
-authRouter.post('/login',validate(loginSchema), asyncHandler(authController.login));
 authRouter.post('/register',validate(registerSchema) ,asyncHandler(authController.register));
+authRouter.post('/login',validate(loginSchema), asyncHandler(authController.login));
+

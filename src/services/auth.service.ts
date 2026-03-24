@@ -11,26 +11,11 @@ const userRepository = AppDataSource.getRepository(User);
 
 export class AuthService {
 
-     getUserByUsername = async (username: string) => {
+    getUserByUsername = async (username: string) => {
         const existUser = await userRepository.findOne({
             where: { username }
         })
         return existUser;
-    }
-
-    async login(username: string, password: string) {
-        const user = await userRepository.findOne({
-            where: { username }
-        })
-        if (!user) {
-            throw new AppError("Unauthorized", 401);
-        }
-        const isMatch = await comparePassword(password, user.password)
-        if (!isMatch) {
-            throw new AppError("Unauthorized", 401);
-        }
-        const userInfo = { id: user.id, username: user.username }
-        return generateToken(userInfo);
     }
 
     async register(username: string, password: string): Promise<RegisterResponseDto> {
@@ -44,5 +29,19 @@ export class AuthService {
         return { id: user.id, username: user.username }
     }
 
+      async login(username: string, password: string) {
+        const user = await userRepository.findOne({
+            where: { username }
+        })
+        if (!user) {
+            throw new AppError("Unauthorized", 401);
+        }
+        const isMatch = await comparePassword(password, user.password)
+        if (!isMatch) {
+            throw new AppError("Unauthorized", 401);
+        }
+        const userInfo = { id: user.id, username: user.username }
+        return generateToken(userInfo);
+    }
 }
 
