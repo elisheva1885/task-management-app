@@ -5,7 +5,6 @@ import { Task } from "../entities/Task.entity.js";
 const taskRepository = AppDataSource.getRepository(Task);
 
 export class TaskService {
-
     async addTask(data:CreateTaskRequestDto, userId: string):Promise<Task> {
          const deadline = new Date(data.deadline);
         const task = taskRepository.create({...data, deadline, userId})
