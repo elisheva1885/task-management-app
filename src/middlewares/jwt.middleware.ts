@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import jwt from 'jsonwebtoken'
-import { configData } from "../config/config.js";
+import { configEnvironmentData } from "../config/config.js";
 import type { AuthRequest } from "../types/auth.types.js";
 
 export const authentication  = (
@@ -17,7 +17,7 @@ export const authentication  = (
         return res.status(401).json({ message: "Unauthorized" })
     }
     try {
-        const decode = jwt.verify(token, configData.jwt)
+        const decode = jwt.verify(token, configEnvironmentData.jwt)
         req.currentUser = decode;
         next();
 
