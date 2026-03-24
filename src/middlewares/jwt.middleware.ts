@@ -20,7 +20,6 @@ export const authentication  = (
         const decode = jwt.verify(token, configEnvironmentData.jwt)
         req.currentUser = decode;
         next();
-
     }catch{
         return res.status(401).json({ message: "Unauthorized" })
     }

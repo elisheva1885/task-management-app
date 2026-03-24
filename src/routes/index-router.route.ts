@@ -1,6 +1,7 @@
 import express from 'express'
-import { TaskController } from '../controllers/task.controller'
 import { taskRouter } from './task.route'
+import {authRouter} from './auth.route.ts'
 export const indexRouter = express.Router()
 
+indexRouter.use('/auth', authRouter )
 indexRouter.use('/tasks',taskRouter )

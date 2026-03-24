@@ -7,7 +7,9 @@ import { indexRouter } from "./routes/index-router.route.js";
 const app = express();
 
 app.use(express.json());
-app.use("/api", indexRouter)
+
+app.use('/api',indexRouter)
+app.use(errorHandler)
 
 const PORT = configEnvironmentData.port ;
 
