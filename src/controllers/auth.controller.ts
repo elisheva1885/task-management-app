@@ -1,11 +1,17 @@
 import { HttpStatus } from "../constants/http-status.js";
-import type { RegisterRequestDto, RegisterResponseDto } from "../dto/auth.dto.js";
+import type { LoginRequestDto, RegisterRequestDto, RegisterResponseDto } from "../dto/auth.dto.js";
 import { passwordScore } from "../helpers/password-helper.js";
 import { AuthService } from "../services/auth.service.js";
-import type { Request, Response } from "express";
+import { type Request , type Response } from "express";
 const authService = new AuthService();
 export class AuthController {
-    async register(req: Request, res: Response) {
+    async login(req: Request, res: Response):Promise<Response> {        
+        const data : LoginRequestDto = req.body;
+        const { username, password } = data;
+        const token = await authService.login(username, password)
+        return res.status(200).json({token: token})
+    }
+     async register(req: Request, res: Response) :Promise<Response> {
         const data: RegisterRequestDto = req.body;
         const { username, password } = data;
         const score = passwordScore(password)

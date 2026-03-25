@@ -1,4 +1,4 @@
-import type { NextFunction, Request, Response } from "express";
+import type { NextFunction, Response } from "express";
 import jwt from 'jsonwebtoken'
 import { configEnvironmentData } from "../config/config.js";
 import type { AuthRequest } from "../types/auth.types.js";
@@ -9,6 +9,7 @@ export const authentication = (
     res: Response,
     next: NextFunction
 ) => {
+    const unauthorized = () => res.status(401).json({ message: "Unauthorized" });
     const header = req.headers.authorization;
     if (!header) {
         return res.status(HttpStatus.UNAUTHORIZED).json({ message: "Unauthorized" })
