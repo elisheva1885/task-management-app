@@ -1,4 +1,4 @@
-import type { Priority } from "../constants/Priority";
+import type { Priority } from "../constants/priority";
 
 export interface CreateTaskRequestDto {
     title: string,

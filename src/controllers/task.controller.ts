@@ -8,7 +8,7 @@ const taskService = new TaskService()
 export class TaskController {
     async addTask(req: AuthRequest, res: Response): Promise<Response> {
         const data: CreateTaskRequestDto = req.body;
-        if (!req.currentUser) {
+        if (!req.currentUser) {            
             return res.status(HttpStatus.UNAUTHORIZED).json({ message: "Unauthorized" });
         }
         const userId = req.currentUser.id;
