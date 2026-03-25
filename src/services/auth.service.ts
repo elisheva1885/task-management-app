@@ -1,3 +1,4 @@
+import { HttpStatus } from "../constants/http-status.js";
 import { AppDataSource } from "../db/data-source.js";
 import type { RegisterResponseDto } from "../dto/auth.dto.js";
 import { User } from "../entities/User.entity.js";
@@ -16,7 +17,7 @@ export class AuthService {
     async register(username: string, password: string): Promise<RegisterResponseDto> {
         const existUser = await getUserByUsername(username);
         if (existUser) {
-            throw new AppError("User already exist", 400)
+            throw new AppError("User already exist", HttpStatus.BAD_REQUEST)
         }
         const hashedPassword  = encryptionPassword(password);
         const user: User = userRepository.create({ username, password: hashedPassword  })
