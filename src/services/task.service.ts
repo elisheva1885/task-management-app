@@ -7,14 +7,15 @@ const taskRepository = AppDataSource.getRepository(Task);
 
 export class TaskService {
     getTaskByTaskIdUserId = async (id: string, userId: string): Promise<Task> => {
-        const task = await taskRepository.findOne(
-            { where: { id, userId } }
-        );
+        const task = await taskRepository.findOne({ where: { id } });
         if (!task) {
-            throw new AppError("task not found", 404)
+            throw new AppError("Task not found", 404);
+        }
+        if (task.userId !== userId) {
+            throw new AppError("Forbidden", 403);
         }
         return task;
-    }
+    };
 
     async deleteTask(id: string, userId: string): Promise<Task> {
         const task = await this.getTaskByTaskIdUserId(id, userId);
