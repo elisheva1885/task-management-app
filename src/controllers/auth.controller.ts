@@ -10,7 +10,7 @@ export class AuthController {
         const token = await authService.login(username, password)
         return res.status(200).json({token: token})
     }
-     async register(req: Request, res: Response) {
+     async register(req: Request, res: Response) :Promise<Response> {
         const data: RegisterRequestDto = req.body;
         const { username, password } = data;
         const score = passwordScore(password)

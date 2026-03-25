@@ -12,6 +12,6 @@ export const comparePassword = async(clinetPass : string , dbPass : string) : Pr
 }
 
 export const generateToken= (userInfo : UserInfo) :  string=> {
-    return jwt.sign(userInfo, configEnvironmentData.jwt, {expiresIn:configEnvironmentData.expiresIn as string})
+    return jwt.sign(userInfo, configEnvironmentData.jwt, {expiresIn:parseInt(configEnvironmentData.expiresIn)})
 }
 
