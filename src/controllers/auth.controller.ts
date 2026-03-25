@@ -4,7 +4,7 @@ import { AuthService } from "../services/auth.service.js";
 import { type Request , type Response } from "express";
 const authService = new AuthService();
 export class AuthController {
-    async login(req: Request, res: Response) {        
+    async login(req: Request, res: Response):Promise<Response> {        
         const data : LoginRequestDto = req.body;
         const { username, password } = data;
         const token = await authService.login(username, password)

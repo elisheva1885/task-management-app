@@ -1,7 +1,10 @@
-import type { NextFunction, Request, Response } from "express";
+import type { NextFunction, Response } from "express";
 import jwt from 'jsonwebtoken'
 import { configEnvironmentData } from "../config/config.js";
 import type { AuthRequest } from "../types/auth.types.js";
+
+// const unauthorized = () => res.status(401).json({ message: "Unauthorized" });
+
 
 export const authentication = (
     req: AuthRequest,
@@ -9,21 +12,23 @@ export const authentication = (
     next: NextFunction
 ) => {
     const header = req.headers.authorization;
+    const unauthorized = () => res.status(401).json({ message: "Unauthorized" });
+
     if (!header) {
-        return res.status(401).json({ message: "Unauthorized" })
+        return unauthorized()
     }
     const token = header.split(" ")[1];
     if (!token) {
-        return res.status(401).json({ message: "Unauthorized" })
+        return unauthorized();
     }
     try {
         const decode = jwt.verify(token, configEnvironmentData.jwt)
         if (typeof decode === "string") {
-            return res.status(401).json({ message: "Unauthorized" });
+            return unauthorized();
         }
 
         if (!decode.id || !decode.username) {
-            return res.status(401).json({ message: "Unauthorized" });
+            return unauthorized();
         }
         req.currentUser = {
             id: decode.id,
@@ -32,6 +37,6 @@ export const authentication = (
         next();
 
     } catch {
-        return res.status(401).json({ message: "Unauthorized" })
+        return unauthorized();
     }
 }

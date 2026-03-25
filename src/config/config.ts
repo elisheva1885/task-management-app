@@ -13,6 +13,7 @@ interface ConfigDb {
 interface ConfigEnvironment {
     port: number;
     jwt: string;
+    expiresIn : string;
 }
 
 export const configDbData: ConfigDb = {
@@ -25,5 +26,6 @@ export const configDbData: ConfigDb = {
 
 export const configEnvironmentData: ConfigEnvironment = {
     port: Number(process.env.PORT) || 3000,
-    jwt: process.env.JWT_SECRET || 'secret'
+    jwt: process.env.JWT_SECRET || 'secret',
+    expiresIn: process.env.EXPIRES_IN_JWT ?? '1h'
 }
