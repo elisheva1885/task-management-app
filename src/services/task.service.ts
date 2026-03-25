@@ -15,6 +15,10 @@ const getTaskById = async (id: string) => {
     return task;
 }
 
+const checkTaskBelogToUser =()=> {
+    
+}
+
 export class TaskService {
     async updateTask(taskData: UpdataTaskRequestDto, id: string, userId: string) {        
         const task = await getTaskById(id);
