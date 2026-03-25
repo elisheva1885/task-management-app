@@ -9,3 +9,5 @@ const taskController = new TaskController();
 
 taskRouter.use(authentication)
 taskRouter.post('/' ,validate(createTaskSchema), asyncHandler(taskController.addTask))
+taskRouter.get('/', asyncHandler(taskController.getAllTasks));
+
