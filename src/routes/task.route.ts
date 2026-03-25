@@ -1,8 +1,12 @@
-import express from 'express'
+import express, { type RequestHandler } from 'express'
 import { TaskController } from '../controllers/task.controller.js';
-import asyncHandler from '../middlewares/async-handler.middleware.js';
 import { authentication } from '../middlewares/jwt.middleware.js';
+import asyncHandler from '../middlewares/async-handler.middleware.js'
 export const taskRouter = express.Router()
 const taskController = new TaskController();
+
 taskRouter.use(authentication)
+taskRouter.get('/', asyncHandler(taskController.getAllTasks));
 taskRouter.delete('/:id',asyncHandler(taskController.deleteTsk));
+
+

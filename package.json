@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch src/app.ts",
     "start": "node dist/app.js",
-    "build": "tsc"
+    "build": "tsc",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
@@ -32,13 +33,22 @@
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.5.0",
     "@types/zxcvbn": "^4.4.5",
+    "@typescript-eslint/eslint-plugin": "^8.57.2",
+    "@typescript-eslint/parser": "^8.57.2",
+    "eslint": "^10.1.0",
+    "globals": "^17.4.0",
+    "jiti": "^2.6.1",
     "nodemon": "^3.1.14",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.57.2"
   }
 }
