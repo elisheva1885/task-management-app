@@ -8,7 +8,6 @@ const taskRepository = AppDataSource.getRepository(Task);
 
 export class TaskService {
     async addTask(data:CreateTaskRequestDto, userId: string):Promise<Task> {
-        console.log("in here ");
          const deadline = new Date(data.deadline);
          if(isNaN(deadline.getTime())){
             throw new AppError("invalid date",HttpStatus.BAD_REQUEST)

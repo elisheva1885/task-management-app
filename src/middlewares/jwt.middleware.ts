@@ -9,23 +9,23 @@ export const authentication = (
     res: Response,
     next: NextFunction
 ) => {
-    const unauthorized = () => res.status(401).json({ message: "Unauthorized" });
+    const unauthorized = () => res.status(HttpStatus.UNAUTHORIZED).json({ message: "Unauthorized" });
     const header = req.headers.authorization;
     if (!header) {
-        return res.status(HttpStatus.UNAUTHORIZED).json({ message: "Unauthorized" })
+        return unauthorized();
     }
     const token = header.split(" ")[1];
     if (!token) {
-        return res.status(HttpStatus.UNAUTHORIZED).json({ message: "Unauthorized" })
+        return unauthorized();
     }
     try {
         const decode = jwt.verify(token, configEnvironmentData.jwt)
         if (typeof decode === "string") {
-            return res.status(HttpStatus.UNAUTHORIZED).json({ message: "Unauthorized" });
+            return unauthorized();;
         }
 
         if (!decode.id || !decode.username) {
-            return res.status(HttpStatus.UNAUTHORIZED).json({ message: "Unauthorized" });
+            return unauthorized();;
         }
         req.currentUser = {
             id: decode.id,
@@ -34,6 +34,6 @@ export const authentication = (
         next();
 
     } catch {
-        return res.status(HttpStatus.UNAUTHORIZED).json({ message: "Unauthorized" })
+        return unauthorized();
     }
 }

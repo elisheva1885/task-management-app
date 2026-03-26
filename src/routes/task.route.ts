@@ -1,4 +1,4 @@
-import express, { type RequestHandler } from 'express'
+import express from 'express'
 import { TaskController } from '../controllers/task.controller.js';
 import { authentication } from '../middlewares/jwt.middleware.js';
 import { validate } from '../middlewares/validate.middleware.js';
