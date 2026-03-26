@@ -6,6 +6,5 @@ export const validateUuid = () => (req: Request, res: Response, next: NextFuncti
     if (!result.success) {
         return res.status(400).json({ message: "Invalid ID format" });
     }
-    req.body = result.data;
     next();
 }

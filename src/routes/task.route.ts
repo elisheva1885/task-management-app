@@ -8,6 +8,6 @@ const taskController = new TaskController();
 
 taskRouter.use(authentication)
 taskRouter.get('/', asyncHandler(taskController.getAllTasks));
-taskRouter.delete('/:id',validateUuid(),asyncHandler(taskController.deleteTsk));
+taskRouter.delete('/:id',validateUuid(),asyncHandler(taskController.deleteTask));
 
 
