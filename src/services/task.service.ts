@@ -1,5 +1,6 @@
 import { AppDataSource } from "../db/data-source";
 import type { UpdataTaskRequestDto } from "../dto/task.dto";
+import type { TaskResponseDto } from "../dto/task.tdo";
 import { Task } from "../entities/Task.entity";
 import { AppError } from "../errors/app-errors";
 
@@ -7,20 +8,17 @@ import { AppError } from "../errors/app-errors";
 const taskRepository = AppDataSource.getRepository(Task);
 const getTaskById = async (id: string) => {
     const task = await taskRepository.findOne({
-        where: {id}
-    })    
+        where: { id }
+    })
     if (!task) {
         throw new AppError("task not found", 404)
     }
     return task;
 }
 
-const checkTaskBelogToUser =()=> {
-    
-}
 
 export class TaskService {
-    async updateTask(taskData: UpdataTaskRequestDto, id: string, userId: string) {        
+    async updateTask(taskData: UpdataTaskRequestDto, id: string, userId: string) {
         const task = await getTaskById(id);
         if (task.userId !== userId) {
             throw new AppError("you have no access to update this task", 403)
@@ -40,5 +38,22 @@ export class TaskService {
         }
         await taskRepository.save(task);
         return task;
+    }
+
+    async getAllTasks(userId: string): Promise<TaskResponseDto[]> {
+        const tasks = await taskRepository.find(
+            { where: { userId } }
+        );
+        const tasksResponse = tasks.map((task) => {
+            const taskResponse: TaskResponseDto = {
+                id: task.id,
+                title: task.title,
+                description: task.description,
+                priority: task.priority,
+                deadline: task.deadline
+            }
+            return taskResponse;
+        })
+        return tasksResponse;
     }
 }

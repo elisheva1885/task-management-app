@@ -9,3 +9,5 @@ const taskController = new TaskController();
 
 taskRouter.use(authentication)
 taskRouter.put('/:id',validate(updateTaskSchema), asyncHandler(taskController.updateTask));
+taskRouter.get('/', asyncHandler(taskController.getAllTasks));
+
