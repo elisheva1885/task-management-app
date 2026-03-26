@@ -1,6 +1,6 @@
 
 import bcrypt from 'bcrypt'
-import jwt, { type SignOptions } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 import { configEnvironmentData } from '../config/config.js';
 export type UserInfo = {
     id: string;
