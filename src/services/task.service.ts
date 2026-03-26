@@ -29,21 +29,10 @@ export class TaskService {
         await taskRepository.save(task);
         return task;
     }
-    async getAllUserTasks(userId: string): Promise<TaskResponseDto[]> {
+    async getAllUserTasks(userId: string): Promise<Task[]> {
         const tasks = await taskRepository.find(
             { where: { userId } }
         );
-        const tasksResponse = tasks.map((task) => {
-            const { id, title, description, priority, deadline } = task;
-            const taskResponse: TaskResponseDto = {
-                id,
-                title,
-                description,
-                priority,
-                deadline
-            }
-            return taskResponse;
-        })
-        return tasksResponse;
+        return tasks;
     }
 }
