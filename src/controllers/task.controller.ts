@@ -15,4 +15,15 @@ export class TaskController {
         const task = await taskService.addTask(data, userId);
         return res.status(HttpStatus.CREATED).json(task);
     }
+    async getAllTasks(req: AuthRequest, res: Response) : Promise<Response> {
+        if (!req.currentUser) {
+            return res.status(HttpStatus.UNAUTHORIZED).json({ message: "Unauthorized" });
+        }
+        const userId = req.currentUser.id;
+        const tasks = await taskService.getAllTasks(userId);
+        if(tasks.length === 0){
+            return res.status(HttpStatus.OK).json({message: "you dont have any tasks yet"})
+        }
+        return res.status(HttpStatus.OK).json(tasks);
+    }
 }

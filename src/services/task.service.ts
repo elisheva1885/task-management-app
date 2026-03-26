@@ -16,6 +16,7 @@ export class TaskService {
         const task = taskRepository.create({...data, deadline, userId})
         await taskRepository.save(task);
         return task;
+    }
     async getAllTasks(userId: string): Promise<TaskResponseDto[]> {
         const tasks = await taskRepository.find(
             { where: { userId } }
