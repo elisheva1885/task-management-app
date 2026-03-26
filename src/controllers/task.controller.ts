@@ -8,9 +8,9 @@ const taskService = new TaskService();
 export class TaskController {
     async updateTask(req: AuthRequest, res: Response) {
         const data: UpdataTaskRequestDto = req.body;
-        const id = req.params.id;
-        if (!id || typeof id !== 'string') {
-            return res.status(400).json({ message: "no task choosen" });
+        const id = req.params.id as string;
+        if (!id ) {
+            return res.status(400).json({  message: "Task ID is required"  });
         }
         const userId = req.currentUser!.id
         const task = await taskService.updateTask(data, id, userId);

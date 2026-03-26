@@ -11,20 +11,20 @@ export const authentication = (
     const unauthorized = () => res.status(401).json({ message: "Unauthorized" });
     const header = req.headers.authorization;
     if (!header) {
-        return unauthorized;
+        return unauthorized();
     }
     const token = header.split(" ")[1];
     if (!token) {
-        return unauthorized;
+        return unauthorized();
     }
     try {
         const decode = jwt.verify(token, configEnvironmentData.jwt)
         if (typeof decode === "string") {
-            return unauthorized;
+            return unauthorized();
         }
 
         if (!decode.id || !decode.username) {
-            return unauthorized;
+            return unauthorized();
         }
         req.currentUser = {
             id: decode.id,
@@ -32,6 +32,6 @@ export const authentication = (
         };
         next();
     } catch {
-        return unauthorized;
+        return unauthorized();
     }
 }

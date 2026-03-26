@@ -6,34 +6,26 @@ import { AppError } from "../errors/app-errors";
 
 
 const taskRepository = AppDataSource.getRepository(Task);
-const getTaskById = async (id: string) => {
-    const task = await taskRepository.findOne({
-        where: { id }
-    })
-    if (!task) {
-        throw new AppError("task not found", 404)
-    }
-    return task;
-}
-
 
 export class TaskService {
-    async updateTask(taskData: UpdataTaskRequestDto, id: string, userId: string) {
-        const task = await getTaskById(id);
+     getTaskByTaskIdUserId = async (id: string, userId: string): Promise<Task> => {
+        const task = await taskRepository.findOne({ where: { id } });
+        if (!task) {
+            throw new AppError("Task not found", 404);
+        }
         if (task.userId !== userId) {
-            throw new AppError("you have no access to update this task", 403)
+            throw new AppError("Forbidden", 403);
         }
-        if (taskData.title !== undefined) {
-            task.title = taskData.title;
-        }
+        return task;
+    };
+
+    async updateTask(taskData: UpdataTaskRequestDto, id: string, userId: string) {
+        const task = await this.getTaskByTaskIdUserId(id,userId);
         task.title = taskData.title !== undefined ? taskData.title : task.title;
         task.description = taskData.description !== undefined ? taskData.description : task.description;
         task.priority = taskData.priority !== undefined ? taskData.priority : task.priority;
         if (taskData.deadline !== undefined) {
             const date = new Date(taskData.deadline);
-            if (isNaN(date.getTime())) {
-                throw new AppError("Invalid date format for deadline", 400);
-            }
             task.deadline = date;
         }
         await taskRepository.save(task);
