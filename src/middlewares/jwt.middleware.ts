@@ -2,6 +2,7 @@ import type { NextFunction, Response } from "express";
 import jwt from 'jsonwebtoken'
 import { configEnvironmentData } from "../config/config.js";
 import type { AuthRequest } from "../types/auth.types.js";
+import { HttpStatus } from "../constants/http-status.js";
 
 export const authentication = (
     req: AuthRequest,
@@ -30,8 +31,8 @@ export const authentication = (
             username: decoded.username
         };
         next();
-    }
-    catch {
+
+    } catch {
         return unauthorized();
     }
 }
