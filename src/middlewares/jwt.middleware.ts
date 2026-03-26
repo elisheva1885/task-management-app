@@ -8,30 +8,31 @@ export const authentication = (
     res: Response,
     next: NextFunction
 ) => {
-    const unauthorized = () => res.status(401).json({ message: "Unauthorized" });
+    const unauthorized = () => res.status(401).json({ message: "unauthorized" });
     const header = req.headers.authorization;
-    if (!header) {
-        return unauthorized;
+    if (!header || !header.startsWith("Bearer ")) {
+        return unauthorized();
     }
     const token = header.split(" ")[1];
     if (!token) {
-        return unauthorized;
+        return unauthorized();
     }
     try {
-        const decode = jwt.verify(token, configEnvironmentData.jwt)
-        if (typeof decode === "string") {
-            return unauthorized;
+        const decoded = jwt.verify(token, configEnvironmentData.jwt)
+        if (typeof decoded === "string") {
+            return unauthorized();
         }
-
-        if (!decode.id || !decode.username) {
-            return unauthorized;
+        if (!decoded.id || !decoded.username) {
+            return unauthorized();
         }
         req.currentUser = {
-            id: decode.id,
-            username: decode.username
+            id: decoded.id,
+            username: decoded.username
         };
         next();
-    } catch {
-        return unauthorized;
+    }
+    catch {
+        return unauthorized();
     }
 }
+
