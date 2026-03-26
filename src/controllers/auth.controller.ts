@@ -9,7 +9,7 @@ export class AuthController {
         const data : LoginRequestDto = req.body;
         const { username, password } = data;
         const token = await authService.login(username, password)
-        return res.status(200).json({token: token})
+        return res.status(HttpStatus.OK).json({token: token})
     }
      async register(req: Request, res: Response) :Promise<Response> {
         const data: RegisterRequestDto = req.body;

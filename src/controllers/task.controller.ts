@@ -6,6 +6,15 @@ import { HttpStatus } from '../constants/http-status.js';
 
 const taskService = new TaskService()
 export class TaskController {
+     async deleteTask(req: AuthRequest, res: Response): Promise<Response>{
+        const taskId = req.params.id as string;
+         if (!req.currentUser) {            
+            return res.status(HttpStatus.UNAUTHORIZED).json({ message: "Unauthorized" });
+        }
+        const userId = req.currentUser.id;
+        await taskService.deleteTask(taskId, userId);
+        return res.status(HttpStatus.NO_CONTENT).send();
+    }
     async addTask(req: AuthRequest, res: Response): Promise<Response> {
         const data: CreateTaskRequestDto = req.body;
         if (!req.currentUser) {            
@@ -20,7 +29,7 @@ export class TaskController {
             return res.status(HttpStatus.UNAUTHORIZED).json({ message: "Unauthorized" });
         }
         const userId = req.currentUser.id;
-        const tasks = await taskService.getAllTasks(userId);
+        const tasks = await taskService.getAllUserTasks(userId);
         if(tasks.length === 0){
             return res.status(HttpStatus.OK).json({message: "you dont have any tasks yet"})
         }
