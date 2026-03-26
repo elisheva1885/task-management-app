@@ -6,13 +6,10 @@ import { AppError } from "../errors/app-errors.js";
 const taskRepository = AppDataSource.getRepository(Task);
 
 export class TaskService {
-    getTaskByTaskIdUserId = async (id: string, userId: string): Promise<Task> => {
-        const task = await taskRepository.findOne({ where: { id } });
+    async getTaskByTaskIdUserId(id: string, userId: string): Promise<Task> {
+        const task = await taskRepository.findOne({ where: { id, userId } });
         if (!task) {
-            throw new AppError("Task not found", 404);
-        }
-        if (task.userId !== userId) {
-            throw new AppError("Forbidden", 403);
+            throw new AppError("Not Found", 404);
         }
         return task;
     };
@@ -21,17 +18,18 @@ export class TaskService {
         const task = await this.getTaskByTaskIdUserId(id, userId);
         await taskRepository.remove(task);
     }
-    async getAllTasks(userId: string): Promise<TaskResponseDto[]> {
+    async getAllUserTasks(userId: string): Promise<TaskResponseDto[]> {
         const tasks = await taskRepository.find(
             { where: { userId } }
         );
         const tasksResponse = tasks.map((task) => {
+            const { id, title, description, priority, deadline } = task;
             const taskResponse: TaskResponseDto = {
-                id: task.id,
-                title: task.title,
-                description: task.description,
-                priority: task.priority,
-                deadline: task.deadline
+                id,
+                title,
+                description,
+                priority,
+                deadline
             }
             return taskResponse;
         })

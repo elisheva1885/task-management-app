@@ -6,12 +6,12 @@ const taskService = new TaskService();
 
 export class TaskController {
      async deleteTask(req: AuthRequest, res: Response): Promise<Response>{
-        const task_id = req.params.id as string;
+        const taskId = req.params.id as string;
          if (!req.currentUser) {            
             return res.status(401).json({ message: "Unauthorized" });
         }
         const userId = req.currentUser.id;
-        await taskService.deleteTask(task_id, userId);
+        await taskService.deleteTask(taskId, userId);
         return res.status(204).send();
     }
     async getAllTasks(req: AuthRequest, res: Response) : Promise<Response> {
@@ -19,7 +19,7 @@ export class TaskController {
             return res.status(401).json({ message: "Unauthorized" });
         }
         const userId = req.currentUser.id;
-        const tasks = await taskService.getAllTasks(userId);
+        const tasks = await taskService.getAllUserTasks(userId);
         if(tasks.length === 0){
             return res.status(200).json({message: "you dont have any tasks yet"})
         }
