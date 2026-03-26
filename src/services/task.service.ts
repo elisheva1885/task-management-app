@@ -3,7 +3,6 @@ import { AppDataSource } from "../db/data-source.js";
 import type { CreateTaskRequestDto } from "../dto/create-task.dto.js";
 import { Task } from "../entities/Task.entity.js";
 import { AppError } from "../errors/app-errors.js";
-import type { TaskResponseDto } from "../dto/task.tdo.js";
 
 const taskRepository = AppDataSource.getRepository(Task);
 
