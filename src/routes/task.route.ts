@@ -7,4 +7,4 @@ const taskController = new TaskController();
 
 taskRouter.use(authentication)
 taskRouter.get('/', asyncHandler(taskController.getAllTasks));
-
+taskRouter.get('/:id',asyncHandler(taskController.getTask))
