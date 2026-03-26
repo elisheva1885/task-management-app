@@ -19,15 +19,15 @@ export class TaskController {
     }
 
     async getTask(req: AuthRequest, res: Response): Promise<Response> {
-        const task_id = req.params.id as string;
-        if (!task_id) {
+        const taskId = req.params.id as string;
+        if (!taskId) {
             return res.status(400).json({  message: "Task ID is required"  });
     }
     if(!req.currentUser) {
         return res.status(401).json({ message: "Unauthorized" });
     }
     const userId = req.currentUser.id;
-    const task = await taskService.getTask(task_id, userId);
+    const task = await taskService.getTask(taskId, userId);
         return res.status(200).json(task);
     }
 
