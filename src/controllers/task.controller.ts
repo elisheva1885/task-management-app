@@ -1,7 +1,6 @@
 import type { CreateTaskRequestDto } from '../dto/create-task.dto.js'
 import { TaskService } from '../services/task.service.js'
 import { type Response } from 'express'
-// import type { Request } from "../types/auth.types.js";
 import { HttpStatus } from '../constants/http-status.js'
 import type { AuthRequest } from '../types/auth.types.js'
 
