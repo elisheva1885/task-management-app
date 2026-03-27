@@ -7,4 +7,11 @@ export const createTaskSchema = z.object({
     deadline : z.string().datetime()
 })
 
+export const updateTaskSchema = z.object({
+    title: z.string(),
+    description : z.string(),
+    priority : z.enum(Priority),
+    deadline : z.string().datetime()
+}).partial();
+
 

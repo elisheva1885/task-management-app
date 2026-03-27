@@ -4,7 +4,6 @@ import type { UpdataTaskRequestDto } from "../dto/task.dto";
 import { HttpStatus } from "../constants/http-status.js";
 import { Task } from "../entities/Task.entity.js";
 import { AppError } from "../errors/app-errors.js";
-import type { TaskResponseDto } from "../dto/task.tdo.js";
 
 const taskRepository = AppDataSource.getRepository(Task);
 
@@ -42,20 +41,10 @@ export class TaskService {
         await taskRepository.save(task);
         return task;
     }
-    async getAllTasks(userId: string): Promise<TaskResponseDto[]> {
+    async getAllTasks(userId: string): Promise<Task[]> {
         const tasks = await taskRepository.find(
             { where: { userId } }
         );
-        const tasksResponse = tasks.map((task) => {
-            const taskResponse: TaskResponseDto = {
-                id: task.id,
-                title: task.title,
-                description: task.description,
-                priority: task.priority,
-                deadline: task.deadline
-            }
-            return taskResponse;
-        })
-        return tasksResponse;
+        return tasks;
     }
 }
