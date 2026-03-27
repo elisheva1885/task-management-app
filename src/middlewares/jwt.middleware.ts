@@ -9,7 +9,7 @@ export const authentication = (
     res: Response,
     next: NextFunction
 ) => {
-    const unauthorized = () => res.status(401).json({ message: "unauthorized" });
+    const unauthorized = () => res.status(HttpStatus.UNAUTHORIZED).json({ message: "unauthorized" });
     const header = req.headers.authorization;
     if (!header || !header.startsWith("Bearer ")) {
         return unauthorized();
