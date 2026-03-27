@@ -1,7 +1,10 @@
 import z from 'zod'
-export const updateTaskSchema = z.object({
-    title : z.string(),
+import { Priority } from '../constants/priority.js'
+export const createTaskSchema = z.object({
+    title: z.string(),
     description : z.string(),
-    priority : z.string(),
+    priority : z.enum(Priority),
     deadline : z.string().datetime()
-}).partial();
+})
+
+
