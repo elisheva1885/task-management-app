@@ -7,6 +7,15 @@ import type { AuthRequest } from "../types/auth.types.js";
 
 const taskService = new TaskService()
 export class TaskController {
+     async deleteTask(req: AuthRequest, res: Response): Promise<Response>{
+        const taskId = req.params.id as string;
+         if (!req.currentUser) {            
+            return res.status(HttpStatus.UNAUTHORIZED).json({ message: "Unauthorized" });
+        }
+        const userId = req.currentUser.id;
+        await taskService.deleteTask(taskId, userId);
+        return res.status(HttpStatus.NO_CONTENT).send();
+    }
     async addTask(req: AuthRequest, res: Response): Promise<Response> {
         const data: CreateTaskRequestDto = req.body;
         const userId = req.currentUser.id;
