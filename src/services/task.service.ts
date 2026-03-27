@@ -1,7 +1,6 @@
 import { HttpStatus } from "../constants/http-status.js";
 import { AppDataSource } from "../db/data-source.js";
 import type { CreateTaskRequestDto } from "../dto/create-task.dto.js";
-import type { TaskResponseDto } from "../dto/task.tdo.js";
 import { Task } from "../entities/Task.entity.js";
 import { AppError } from "../errors/app-errors.js";
 
@@ -12,7 +11,7 @@ export class TaskService {
     async getTaskByTaskIdUserId(id: string, userId: string): Promise<Task> {
         const task = await taskRepository.findOne({ where: { id, userId } });
         if (!task) {
-            throw new AppError("Not Found", 404);
+            throw new AppError("Not Found", HttpStatus.BAD_REQUEST);
         }
         return task;
     };
@@ -37,16 +36,9 @@ export class TaskService {
         return tasks;
     }
 
-    async getTask(id: string, userId: string): Promise<TaskResponseDto> {
+    async getTask(id: string, userId: string): Promise<Task> {
         const task = await this.getTaskByTaskIdUserId(id, userId);
-        const taskResponse: TaskResponseDto = {
-            id: task.id,
-            title: task.title,
-            description: task.description,
-            priority: task.priority,
-            deadline: task.deadline
-        };
-        return taskResponse;
+        return task;
     }
 
 }

@@ -32,11 +32,11 @@ export class AuthService {
             where: { username }
         })
         if (!user) {
-            throw new AppError("Unauthorized", 401);
+            throw new AppError("Unauthorized", HttpStatus.UNAUTHORIZED);
         }
         const isMatch = await comparePassword(password, user.password)
         if (!isMatch) {
-            throw new AppError("Unauthorized", 401);
+            throw new AppError("Unauthorized", HttpStatus.UNAUTHORIZED);
         }
         const userInfo: UserInfo = { id: user.id, username: user.username }
         return generateToken(userInfo);
