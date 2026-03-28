@@ -1,7 +1,3 @@
-import type { NextFunction , Request, Response} from "express";
+import type { NextFunction, Request, Response } from 'express'
 
-export type AsyncFunction = (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => Promise<Response>;
+export type AsyncFunction = (req: Request, res: Response, next: NextFunction) => Promise<Response>
