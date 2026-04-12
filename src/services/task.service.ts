@@ -5,20 +5,9 @@ import { HttpStatus } from "../constants/http-status.js";
 import { Task } from "../entities/Task.entity.js";
 import { AppError } from "../errors/app-errors.js";
 
-const taskRepository = AppDataSource.getRepository(Task);
+const taskRepository = AppDataSource.getRepository(Task)
 
 export class TaskService {
-     getTaskByTaskIdUserId = async (id: string, userId: string): Promise<Task> => {
-        const task = await taskRepository.findOne({ where: { id } });
-        if (!task) {
-            throw new AppError("Task not found", 404);
-        }
-        if (task.userId !== userId) {
-            throw new AppError("Forbidden", 403);
-        }
-        return task;
-    };
-
     async updateTask(taskData: UpdataTaskRequestDto, id: string, userId: string) {
         const task = await this.getTaskByTaskIdUserId(id,userId);
         task.title = taskData.title !== undefined ? taskData.title : task.title;
@@ -31,20 +20,34 @@ export class TaskService {
         await taskRepository.save(task);
         return task;
     }
+	async getTaskByTaskIdUserId(id: string, userId: string): Promise<Task> {
+		const task = await taskRepository.findOne({ where: { id, userId } })
+		if (!task) {
+			throw new AppError('Not Found', HttpStatus.BAD_REQUEST)
+		}
+		return task
+	}
 
-    async addTask(data:CreateTaskRequestDto, userId: string):Promise<Task> {
-         const deadline = new Date(data.deadline);
-         if(isNaN(deadline.getTime())){
-            throw new AppError("invalid date",HttpStatus.BAD_REQUEST)
-         }
-        const task = taskRepository.create({...data, deadline, userId})
-        await taskRepository.save(task);
-        return task;
-    }
-    async getAllTasks(userId: string): Promise<Task[]> {
-        const tasks = await taskRepository.find(
-            { where: { userId } }
-        );
-        return tasks;
-    }
+	async deleteTask(id: string, userId: string): Promise<void> {
+		const task = await this.getTaskByTaskIdUserId(id, userId)
+		await taskRepository.remove(task)
+	}
+	async addTask(data: CreateTaskRequestDto, userId: string): Promise<Task> {
+		const deadline = new Date(data.deadline)
+		if (isNaN(deadline.getTime())) {
+			throw new AppError('invalid date', HttpStatus.BAD_REQUEST)
+		}
+		const task = taskRepository.create({ ...data, deadline, userId })
+		await taskRepository.save(task)
+		return task
+	}
+	async getAllUserTasks(userId: string): Promise<Task[]> {
+		const tasks = await taskRepository.find({ where: { userId } })
+		return tasks
+	}
+
+	async getTask(id: string, userId: string): Promise<Task> {
+		const task = await this.getTaskByTaskIdUserId(id, userId)
+		return task
+	}
 }
