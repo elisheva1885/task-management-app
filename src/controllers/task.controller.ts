@@ -1,11 +1,23 @@
-import type { CreateTaskRequestDto } from '../dto/create-task.dto.js'
-import { TaskService } from '../services/task.service.js'
-import { type Response } from 'express'
-import { HttpStatus } from '../constants/http-status.js'
-import type { AuthRequest } from '../types/auth.types.js'
+import type { CreateTaskRequestDto } from "../dto/create-task.dto.js";
+import { TaskService } from "../services/task.service.js";
+import { type Response } from "express";
+import type { AuthRequest } from "../types/auth.types.js";
+import type { UpdataTaskRequestDto } from "../dto/task.dto.js";
+import { HttpStatus } from '../constants/http-status.js';
 
 const taskService = new TaskService()
 export class TaskController {
+     async updateTask(req: AuthRequest, res: Response) {
+        const data: UpdataTaskRequestDto = req.body;
+        const id = req.params.id as string;
+        if (!id ) {
+            return res.status(400).json({  message: "Task ID is required"  });
+        }
+        const userId = req.currentUser!.id
+        const task = await taskService.updateTask(data, id, userId);
+        return res.status(200).json(task);
+    }
+
 	async deleteTask(req: AuthRequest, res: Response): Promise<Response> {
 		const taskId = req.params.id as string
 		if (!req.currentUser) {
