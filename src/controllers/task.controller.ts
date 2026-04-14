@@ -2,26 +2,27 @@ import type { CreateTaskRequestDto } from "../dto/create-task.dto.js";
 import { TaskService } from "../services/task.service.js";
 import { type Response } from "express";
 import type { AuthRequest } from "../types/auth.types.js";
-import type { UpdataTaskRequestDto } from "../dto/task.dto.js";
+import type { UpdateTaskRequestDto } from "../dto/task.dto.js";
 import { HttpStatus } from '../constants/http-status.js';
 
 const taskService = new TaskService()
 export class TaskController {
-     async updateTask(req: AuthRequest, res: Response) {
-        const data: UpdataTaskRequestDto = req.body;
-        const id = req.params.id as string;
-        if (!id ) {
-            return res.status(400).json({  message: "Task ID is required"  });
-        }
-        const userId = req.currentUser!.id
-        const task = await taskService.updateTask(data, id, userId);
-        return res.status(200).json(task);
-    }
+
+	async updateTask(req: AuthRequest, res: Response): Promise<Response> {
+		const data: UpdateTaskRequestDto = req.body;
+		const taskId = req.params.id
+		if (!taskId|| typeof taskId !== 'string') {
+			return res.status(HttpStatus.BAD_REQUEST).json({ message: 'Missing taskId' });
+		}
+		const userId = req.currentUser.id
+		const task = await taskService.updateTask(data, taskId, userId);
+		return res.status(HttpStatus.OK).json(task);
+	}
 
 	async deleteTask(req: AuthRequest, res: Response): Promise<Response> {
-		const taskId = req.params.id as string
-		if (!req.currentUser) {
-			return res.status(HttpStatus.UNAUTHORIZED).json({ message: 'Unauthorized' })
+		const taskId = req.params.id
+		if (!taskId|| typeof taskId !== 'string') {
+			return res.status(HttpStatus.BAD_REQUEST).json({ message: 'Missing taskId' });
 		}
 		const userId = req.currentUser.id
 		await taskService.deleteTask(taskId, userId)
@@ -43,12 +44,12 @@ export class TaskController {
 	}
 
 	async getTask(req: AuthRequest, res: Response): Promise<Response> {
-		const taskId = req.params.id as string
-		if (!taskId) {
-			return res.status(HttpStatus.BAD_REQUEST).json({ message: 'Task ID is required' })
+		const taskId = req.params.id
+		if (!taskId|| typeof taskId !== 'string') {
+			return res.status(HttpStatus.BAD_REQUEST).json({ message: 'Missing taskId' });
 		}
 		const userId = req.currentUser.id
 		const task = await taskService.getTask(taskId, userId)
-		return res.status(200).json(task)
+		return res.status(HttpStatus.OK).json(task)
 	}
 }

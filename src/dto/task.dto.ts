@@ -1,6 +1,6 @@
 import type { Priority } from "../constants/priority";
 
-export interface UpdataTaskRequestDto {
+export interface UpdateTaskRequestDto {
     title ?: string;
     description ?: string;
     priority ? : Priority;

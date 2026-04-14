@@ -11,6 +11,6 @@ const taskController = new TaskController()
 taskRouter.use(authentication)
 taskRouter.post('/', validate(createTaskSchema), asyncHandler(taskController.addTask))
 taskRouter.get('/', asyncHandler(taskController.getAllTasks))
-taskRouter.get('/:id', asyncHandler(taskController.getTask))
+taskRouter.get('/:id',validateUuid(), asyncHandler(taskController.getTask))
 taskRouter.delete('/:id', validateUuid(), asyncHandler(taskController.deleteTask))
-taskRouter.put('/:id',validate(updateTaskSchema), asyncHandler(taskController.updateTask));
+taskRouter.put('/:id',validateUuid(),validate(updateTaskSchema), asyncHandler(taskController.updateTask));

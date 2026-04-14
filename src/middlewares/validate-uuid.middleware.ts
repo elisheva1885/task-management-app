@@ -5,7 +5,8 @@ export const validateUuid = () => (req: Request, res: Response, next: NextFuncti
 	const id = req.params.id
 	const result = z.uuid().safeParse(id)
 	if (!result.success) {
-		return res.status(HttpStatus.NOT_FOUND).json({ message: 'Invalid ID format' })
+		return res.status(HttpStatus.BAD_REQUEST).json({ message: 'Invalid ID format' })
 	}
+	req.params.id = result.data;
 	next()
 }

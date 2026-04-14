@@ -14,10 +14,11 @@ const PORT = configEnvironmentData.port
 AppDataSource.initialize()
 	.then(async () => {
 		console.log('Database connected successfully!')
+		app.listen(PORT, () => {
+			console.log(`server running on port ${PORT}`)
+		})
 	})
 	.catch((err: Error) => {
 		console.log('Error on Database initializtion: ', err)
 	})
-app.listen(PORT, () => {
-	console.log(`server running on port ${PORT}`)
-})
+

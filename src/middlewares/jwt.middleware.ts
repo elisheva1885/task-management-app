@@ -27,7 +27,8 @@ export const authentication = (req: AuthRequest, res: Response, next: NextFuncti
 			username: decoded.username,
 		}
 		next()
-	} catch {
+	} catch (err){
+		  console.error('JWT verification failed:', err instanceof Error ? err.message : err)
 		return unauthorized()
 	}
 }
