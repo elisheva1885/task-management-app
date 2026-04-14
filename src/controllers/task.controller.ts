@@ -4,7 +4,6 @@ import { type Response } from "express";
 import type { AuthRequest } from "../types/auth.types.js";
 import type { UpdateTaskRequestDto } from "../dto/task.dto.js";
 import { HttpStatus } from '../constants/http-status.js';
-import { string } from "zod";
 
 const taskService = new TaskService()
 export class TaskController {
@@ -15,9 +14,9 @@ export class TaskController {
 		if (!taskId|| typeof taskId !== 'string') {
 			return res.status(HttpStatus.BAD_REQUEST).json({ message: 'Missing taskId' });
 		}
-		const userId = req.currentUser!.id
+		const userId = req.currentUser.id
 		const task = await taskService.updateTask(data, taskId, userId);
-		return res.status(200).json(task);
+		return res.status(HttpStatus.OK).json(task);
 	}
 
 	async deleteTask(req: AuthRequest, res: Response): Promise<Response> {
@@ -51,6 +50,6 @@ export class TaskController {
 		}
 		const userId = req.currentUser.id
 		const task = await taskService.getTask(taskId, userId)
-		return res.status(200).json(task)
+		return res.status(HttpStatus.OK).json(task)
 	}
 }
