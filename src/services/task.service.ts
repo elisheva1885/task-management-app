@@ -1,6 +1,6 @@
 import { AppDataSource } from "../db/data-source";
 import type { CreateTaskRequestDto } from "../dto/create-task.dto";
-import type { UpdataTaskRequestDto } from "../dto/task.dto";
+import type { UpdateTaskRequestDto } from "../dto/task.dto";
 import { HttpStatus } from "../constants/http-status.js";
 import { Task } from "../entities/Task.entity.js";
 import { AppError } from "../errors/app-errors.js";
@@ -8,7 +8,7 @@ import { AppError } from "../errors/app-errors.js";
 const taskRepository = AppDataSource.getRepository(Task)
 
 export class TaskService {
-    async updateTask(taskData: UpdataTaskRequestDto, id: string, userId: string) {
+    async updateTask(taskData: UpdateTaskRequestDto, id: string, userId: string) : Promise<Task>{
         const task = await this.getTaskByTaskIdUserId(id,userId);
         task.title = taskData.title !== undefined ? taskData.title : task.title;
         task.description = taskData.description !== undefined ? taskData.description : task.description;
@@ -23,7 +23,7 @@ export class TaskService {
 	async getTaskByTaskIdUserId(id: string, userId: string): Promise<Task> {
 		const task = await taskRepository.findOne({ where: { id, userId } })
 		if (!task) {
-			throw new AppError('Not Found', HttpStatus.BAD_REQUEST)
+			throw new AppError('Not Found', HttpStatus.NOT_FOUND)
 		}
 		return task
 	}
